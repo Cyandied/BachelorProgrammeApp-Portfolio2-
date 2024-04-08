@@ -4,6 +4,7 @@ module appcode.bachelorprogrammeapp {
 
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
+    requires java.sql;
 
     opens appcode.bachelorprogrammeapp to javafx.fxml;
     exports appcode.bachelorprogrammeapp;
