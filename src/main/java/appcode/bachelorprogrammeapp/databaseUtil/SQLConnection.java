@@ -129,10 +129,11 @@ public class SQLConnection {
         Statement stm = c.createStatement();
         int bachelorProgrammeId = stm.executeQuery("Select id from bachelorProgrammes where studentNr = '"+studentNr+"';").getInt(1);
 
-        ResultSet resCourse = stm.executeQuery("SELECT SUM(ECTs) as total from courses inner join bachelorProgrammeCourses on courses.id = bachelorProgrammeCourses.course AND bachelorProgrammeCourses.bachelorProgramme = "+bachelorProgrammeId+";");
-        ResultSet resProject = stm.executeQuery("SELECT SUM(ECTs) as total from projects inner join bachelorProgrammeProjects on projects.id = bachelorProgrammeProjects.project AND bachelorProgrammeProjects.bachelorProgramme = "+bachelorProgrammeId+";");
-
-        return resCourse.getInt("total")+resProject.getInt("total");
+        ResultSet resCourse = stm.executeQuery("SELECT SUM(ECTs) as totalC from courses inner join bachelorProgrammeCourses on courses.id = bachelorProgrammeCourses.course AND bachelorProgrammeCourses.bachelorProgramme = "+bachelorProgrammeId+";");
+        int courseECTs = resCourse.getInt("totalC");
+        ResultSet resProject = stm.executeQuery("SELECT SUM(ECTs) as totalP from projects inner join bachelorProgrammeProjects on projects.id = bachelorProgrammeProjects.project AND bachelorProgrammeProjects.bachelorProgramme = "+bachelorProgrammeId+";");
+        int projectECTs = resProject.getInt("totalP");
+        return courseECTs + projectECTs;
     }
 
 }
